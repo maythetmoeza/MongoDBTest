@@ -14,7 +14,17 @@ object RealmConfiguration {
     @Provides
     @Singleton
     fun providesRealmConfigs(): Realm {
-        val config = RealmConfiguration.create(setOf(Item::class))
+        val config = RealmConfiguration
+            .Builder(schema = setOf(Item::class)).compactOnLaunch()
+            .build()
+
         return Realm.open(config)
     }
+
+    @Provides
+    @Singleton
+    fun providesItemDao(realm: Realm): ItemDao {
+        return ItemDao(realm)
+    }
+
 }
