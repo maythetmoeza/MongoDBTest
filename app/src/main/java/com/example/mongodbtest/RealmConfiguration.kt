@@ -15,7 +15,7 @@ object RealmConfiguration {
     @Singleton
     fun providesRealmConfigs(): Realm {
         val config = RealmConfiguration
-            .Builder(schema = setOf(Item::class)).compactOnLaunch()
+            .Builder(schema = setOf(Item::class, TownList::class, TownshipRealm::class)).compactOnLaunch()
             .build()
 
         return Realm.open(config)

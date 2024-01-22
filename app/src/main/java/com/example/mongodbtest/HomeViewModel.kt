@@ -23,10 +23,20 @@ class HomeViewModel @Inject constructor(
     var ownerId = mutableStateOf("")
     var summary = mutableStateOf("")
     var isComplete = mutableStateOf("")
+    var townList = mutableStateOf(emptyList<TownshipRealm>())
+
     fun getAllItem(){
         viewModelScope.launch {
             itemDao.getAllItems().collect {
                 allItem.value = it
+            }
+        }
+    }
+
+    fun getAllTownship(){
+        viewModelScope.launch {
+            itemDao.getAllTownship().collect {
+                townList.value = it
             }
         }
     }
@@ -38,6 +48,10 @@ class HomeViewModel @Inject constructor(
             isComplete = this@HomeViewModel.isComplete.value.toBoolean()
         })
 
+    }
+
+    fun insertTownships(townList: List<Township>) = viewModelScope.launch(Dispatchers.IO) {
+        itemDao.insertTownList(townList)
     }
 
     fun deleteAll() = viewModelScope.launch(Dispatchers.IO) {

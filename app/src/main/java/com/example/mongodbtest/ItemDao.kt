@@ -2,8 +2,10 @@ package com.example.mongodbtest
 
 import io.realm.kotlin.Realm
 import io.realm.kotlin.ext.query
+import io.realm.kotlin.ext.realmListOf
 import io.realm.kotlin.notifications.ResultsChange
 import io.realm.kotlin.query.RealmResults
+import io.realm.kotlin.types.RealmAny
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -13,7 +15,27 @@ class ItemDao @Inject constructor(
 ) {
     suspend fun insertItem(item: Item) = realm.writeBlocking { copyToRealm(item) }
 
+    fun insertTownList(list: List<Township>) = realm.writeBlocking {
+        val townList = TownList().apply {
+            data.apply {
+                list.forEach {
+                    add(TownshipRealm().apply {
+                        id = it.id
+                        name = it.name
+                        description = it.description
+                    })
+                }
+
+            }
+        }
+        // Copy the object to the realm to return a managed instance
+        copyToRealm(townList)
+    }
+
+    fun getAllTownship() : Flow<List<TownshipRealm>> = realm.query<TownshipRealm>().asFlow().map { it.list }
+
     fun getAllItems() : Flow<List<Item>> = realm.query<Item>().asFlow().map { it.list }
+
     suspend fun deleteAllItems() = realm.write {
         deleteAll()
     }

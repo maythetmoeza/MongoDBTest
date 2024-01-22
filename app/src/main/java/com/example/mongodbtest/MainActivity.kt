@@ -63,23 +63,31 @@ class MainActivity : ComponentActivity() {
 fun Greeting(
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
+
     LaunchedEffect(key1 = Unit, block = {
         viewModel.getAllItem()
+        viewModel.getAllTownship()
     })
     var isComplete by remember{ mutableStateOf("")}
     var summary by remember { mutableStateOf("")}
     var owner_id by remember { mutableStateOf("")}
     val itemList = viewModel.allItem.value
+    val townListResponse = viewModel.townList.value
     var searchItem by remember { mutableStateOf(Item()) }
+
+    val townList = listOf(Township("1", "Yangon"), Township("2", "Mandalay"), Township("3", "Naypyitaw"))
+
 
     viewModel.summary.value = summary
     viewModel.ownerId.value = owner_id
     viewModel.isComplete.value = isComplete
 
+
     Log.d("Data list", itemList.toString())
     Box(modifier = Modifier
         .fillMaxSize()
-        .background(Color.LightGray)) {
+        .background(Color.LightGray))
+    {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -87,22 +95,22 @@ fun Greeting(
             verticalArrangement = Arrangement.spacedBy(15.dp),
         ) {
             Row(modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-                ){
-                Text(text = "isComplete", color = Color.Black)
-                OutlinedTextField(
-                    value = isComplete,
-                    onValueChange = {
-                        isComplete = it
-                    },
+            horizontalArrangement = Arrangement.SpaceBetween
+            ){
+            Text(text = "isComplete", color = Color.Black)
+            OutlinedTextField(
+                value = isComplete,
+                onValueChange = {
+                    isComplete = it
+                },
 
-                    colors = TextFieldDefaults.textFieldColors(
-                        containerColor = Color.White,
-                        textColor = Color.Black
-                    )
+                colors = TextFieldDefaults.textFieldColors(
+                    containerColor = Color.White,
+                    textColor = Color.Black
                 )
+            )
 
-            }
+        }
 
             Row(modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -138,7 +146,6 @@ fun Greeting(
                 )
 
             }
-
 
             Row(
                 modifier = Modifier
@@ -180,6 +187,20 @@ fun Greeting(
                 }) {
                     Text(text = "FilterByIsComplete")
                 }
+
+            }
+            Row(modifier = Modifier.fillMaxWidth()){
+                Button(onClick = {
+                    viewModel.insertTownships(townList)
+                }) {
+                    Text(text = "InsertTownships")
+                }
+                Button(onClick = {
+                    viewModel.getAllTownship()
+                }) {
+                    Text(text = "GetAllTownships")
+                }
+
             }
 
 
@@ -209,6 +230,20 @@ fun Greeting(
                         Text(text = it.isComplete.toString(), color = Color.Black)
                         Text(text = it.summary, color = Color.Black)
                         Text(text = it.owner_id, color = Color.Black)
+
+                    }
+                }
+
+                townListResponse.forEach {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 10.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                    ) {
+                        Text(text = it.id, color = Color.Black)
+                        Text(text = it.name, color = Color.Black)
+                        Text(text = it.description, color = Color.Black)
 
                     }
                 }
