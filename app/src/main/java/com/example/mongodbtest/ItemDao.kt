@@ -34,6 +34,17 @@ class ItemDao @Inject constructor(
 
     fun getAllTownship() : Flow<List<TownshipRealm>> = realm.query<TownshipRealm>().asFlow().map { it.list }
 
+    fun getTownData()  = realm.query<TownshipRealm>().find()
+    fun deleteTownship() {
+        realm.writeBlocking {
+            val realmResult = realm.query<TownshipRealm>().find()
+            for (consumerRealm in realmResult) {
+                findLatest(consumerRealm)?.let {
+                    delete(it)
+                }
+            }
+        }
+    }
     fun getAllItems() : Flow<List<Item>> = realm.query<Item>().asFlow().map { it.list }
 
     suspend fun deleteAllItems() = realm.write {

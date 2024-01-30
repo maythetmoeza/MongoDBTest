@@ -24,6 +24,7 @@ class HomeViewModel @Inject constructor(
     var summary = mutableStateOf("")
     var isComplete = mutableStateOf("")
     var townList = mutableStateOf(emptyList<TownshipRealm>())
+    var townListData : MutableList<Township> = mutableListOf()
 
     fun getAllItem(){
         viewModelScope.launch {
@@ -37,6 +38,25 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             itemDao.getAllTownship().collect {
                 townList.value = it
+            }
+        }
+    }
+    fun deleteTownship(){
+        viewModelScope.launch {
+            itemDao.deleteTownship()
+        }
+    }
+    fun getTownList(){
+        viewModelScope.launch {
+            val realmResult = itemDao.getTownData()
+            for (townRealm in realmResult) {
+                townListData.add(
+                    Township(
+                        id = townRealm.id,
+                        name = townRealm.name,
+                        description = townRealm.description
+                    )
+                )
             }
         }
     }
