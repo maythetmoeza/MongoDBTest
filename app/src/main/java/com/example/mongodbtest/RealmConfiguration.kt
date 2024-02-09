@@ -1,5 +1,10 @@
 package com.example.mongodbtest
 
+import com.example.mongodbtest.ui.test.ConsumerRealm
+import com.example.mongodbtest.ui.test.FormList
+import com.example.mongodbtest.ui.test.FormRealm
+import com.example.mongodbtest.ui.test.FormRealmList
+import com.example.mongodbtest.ui.test.ProposalRealm
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +20,19 @@ object RealmConfiguration {
     @Singleton
     fun providesRealmConfigs(): Realm {
         val config = RealmConfiguration
-            .Builder(schema = setOf(Item::class, TownList::class, TownshipRealm::class)).compactOnLaunch()
+            .Builder(schema =
+            setOf(
+                Item::class,
+                TownList::class,
+                TownshipRealm::class,
+                ConsumerRealm::class,
+                ProposalRealm::class,
+                FormRealm::class,
+                FormRealmList::class
+            )
+            )
+            .compactOnLaunch()
+            .deleteRealmIfMigrationNeeded()
             .build()
 
         return Realm.open(config)
