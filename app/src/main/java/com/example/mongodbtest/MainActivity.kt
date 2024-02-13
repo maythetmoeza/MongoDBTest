@@ -36,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mongodbtest.ui.test.NavGraph
+import com.example.mongodbtest.ui.testTwo.NavGraphTwo
 import com.example.mongodbtest.ui.theme.MongoDBTestTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -53,7 +54,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
 //                    Greeting()
-                    NavGraph()
+//                    NavGraph()
+                    NavGraphTwo()
                 }
             }
         }

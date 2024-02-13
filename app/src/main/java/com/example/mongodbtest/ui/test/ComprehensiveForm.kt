@@ -67,39 +67,26 @@ fun ComprehensiveForm(
                             } else {
                                 Button(
                                     onClick = {
+                                        realmModel.getConsumer("123")
+                                        val info = Information(
+                                            name = "mtm",
+                                            fatherName = "U Aung",
+                                            nrc = "123",
+                                            paymentType = null,
+                                            currencyType = null,
+                                        )
 
-                                        if(page.value == 1){
-
-                                            val consumer = Consumer(
-                                                name = "Test 2",
-                                                fatherName = "ast",
-                                                nrc = "mmm/maa(n)123456"
+                                        if(realmModel.alreadyExist.value){
+                                            val update = Information(
+                                                name = "mtm",
+                                                fatherName = "U Aung",
+                                                nrc = "123",
+                                                paymentType = "bank",
+                                                currencyType = "mmk",
                                             )
-                                            val form = Form(
-                                                consumer = consumer,
-                                                proposal = null
-                                            )
-                                            Log.d("RealmForm", form.toString())
-                                            realmModel.insertFormData(form)
-
-                                            Log.d("RealmInsert", "insert")
-                                            realmModel.getLastForm()
-
-                                        }else if(page.value == 2){
-                                            val proposal = Proposal(
-                                                paymentType = "Online 2",
-                                                currencyType = "alsdf"
-                                            )
-                                            val lastForm = realmModel.lastForm
-                                            val updateForm = Form(
-                                                consumer = lastForm?.consumer,
-                                                proposal = proposal
-                                            )
-
-                                            realmModel.updateForm(updateForm)
-
-
-                                            Log.d("LastForm", lastForm.toString())
+                                            realmModel.updateInfo(update)
+                                        }else{
+                                            realmModel.insert(info)
                                         }
 
                                         page.value++

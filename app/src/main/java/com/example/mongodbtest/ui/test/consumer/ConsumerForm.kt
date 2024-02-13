@@ -13,21 +13,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
-fun ConsumerForm() {
-    var name by remember{ mutableStateOf("") }
-    var fatherName by remember { mutableStateOf("")}
-    var nrc by remember { mutableStateOf("")}
+fun ConsumerForm (){
+    var name by remember { mutableStateOf("") }
+    var fatherName by remember { mutableStateOf("") }
+    var nrc by remember { mutableStateOf("") }
+
 
 
     Column(

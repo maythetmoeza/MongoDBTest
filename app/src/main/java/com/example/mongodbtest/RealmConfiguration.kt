@@ -1,10 +1,10 @@
 package com.example.mongodbtest
 
 import com.example.mongodbtest.ui.test.ConsumerRealm
-import com.example.mongodbtest.ui.test.FormList
-import com.example.mongodbtest.ui.test.FormRealm
-import com.example.mongodbtest.ui.test.FormRealmList
 import com.example.mongodbtest.ui.test.ProposalRealm
+import com.example.mongodbtest.ui.testTwo.CustomerRealm
+import com.example.mongodbtest.ui.testTwo.DriverRealm
+import com.example.mongodbtest.ui.testTwo.PropoRealm
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,8 +27,10 @@ object RealmConfiguration {
                 TownshipRealm::class,
                 ConsumerRealm::class,
                 ProposalRealm::class,
-                FormRealm::class,
-                FormRealmList::class
+                CustomerRealm::class,
+                PropoRealm::class,
+                DriverRealm::class,
+
             )
             )
             .compactOnLaunch()
